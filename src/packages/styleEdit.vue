@@ -25,6 +25,21 @@
        <div class="input-cot" style="margin-top: 12px;">
          <span>上下</span><el-input-number v-model="cotStyle.marginRight"  :min="0"    size="mini"></el-input-number>
        </div>
+       <p class="title ">
+         背景颜色
+       </p>
+       <div class="color-cot" @click="showColor">
+         <el-popover
+                 placement="top-start"
+                 trigger="click">
+           <div slot="reference" class="color-btn">
+             <el-button  :style="{'backgroundColor': cotStyle.style.backgroundColor}"  style="margin-right:15px;" > </el-button> <span>{{cotStyle.style.backgroundColor}}</span>
+           </div>
+           <div >
+             <sketch-picker  :value="cotStyle.style.backgroundColor" @input="updateValue"/>
+           </div>
+         </el-popover>
+       </div>
 
      </section>
     </el-drawer>
@@ -32,8 +47,12 @@
 </template>
 
 <script>
+  import { Sketch } from 'vue-color'
   export default {
     name: 'StyleEdit',
+    components: {
+      'sketch-picker': Sketch
+    },
     data() {
       return {
         drawerShow: false,
@@ -41,7 +60,10 @@
           marginTop: 10,
           marginRight: 10,
           margin: [],
-          autoSize: true
+          autoSize: true,
+          style: {
+            backgroundColor: '#DBD8D8'
+          }
         }
       }
     },
@@ -53,7 +75,6 @@
           d.margin.push(d.marginTop)
           d.margin.push(d.marginRight)
           this.$parent.cotStyle = d
-          console.log(d)
         },
         deep: true
       }
@@ -61,6 +82,12 @@
     mounted() {
     },
     methods: {
+      updateValue(val) {
+        this.cotStyle.style.backgroundColor = val.hex
+      },
+      showColor() {
+
+      },
       change(e) {
         console.log(e)
       },
@@ -109,6 +136,12 @@
           margin-right: 15px;
         }
       }
+    }
+    .color-btn{
+      display: flex;
+      align-items: center;
+      justify-content: left;
+      width: 100%;
     }
   }
 </style>

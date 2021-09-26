@@ -28,6 +28,7 @@
         :is-draggable="draggable"
         :is-resizable="resizable"
         :autoSize="cotStyle.autoSize"
+        :style="cotStyle.style"
         :vertical-compact="true"
         :use-css-transforms="true"
         @movedEvent="movedEvent"
@@ -44,7 +45,7 @@
           drag-allow-from=".vue-draggable-handle"
           drag-ignore-from=".grid-menu"
           :class="{'grid-menu-setCot': isEdit}"
-          :style="cotStyle.style"
+
         >
           <div class="grid-menu" >
             <div  @click="edit(item)">编辑</div>
