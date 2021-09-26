@@ -32,7 +32,7 @@
         this.detailItem = item.comField
       },
       close() {
-        this.$store.state.layout = JSON.parse(JSON.stringify(this.$store.state.layoutEdit))
+        this.$parent.layout = JSON.parse(JSON.stringify(this.$parent.layoutEdit))
       },
       childClose() {
         this.drawerShow = false

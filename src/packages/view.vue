@@ -2,11 +2,14 @@
   <div>
     <nav class="edit-cot">
       <template v-if="isEdit">
+        <el-tooltip class="item" effect="dark" content="布局设置" placement="bottom">
+          <el-button type="info" circle    icon="el-icon-setting" @click="styleEdit"></el-button>
+        </el-tooltip>
         <el-tooltip class="item" effect="dark" content="新增卡片" placement="bottom">
-          <el-button type="success" circle    icon="el-icon-menu" @click="editGird"></el-button>
+          <el-button type="primary" circle    icon="el-icon-s-grid" @click="editGird"></el-button>
         </el-tooltip>
         <el-tooltip class="item" effect="dark" content="保存" placement="bottom">
-          <el-button type="primary"  circle icon="el-icon-upload"  @click="save"></el-button>
+          <el-button type="warning"  circle icon="el-icon-upload"  @click="save"></el-button>
         </el-tooltip>
         <el-tooltip class="item" effect="dark" content="恢复默认数据" placement="bottom">
           <el-button type="success" circle    icon="el-icon-timer" @click="findBack"></el-button>
@@ -21,9 +24,10 @@
         :layout.sync="layout"
         :col-num="12"
         :row-height="30"
-        :margin="[24,24]"
+        :margin="cotStyle.margin"
         :is-draggable="draggable"
         :is-resizable="resizable"
+        :autoSize="cotStyle.autoSize"
         :vertical-compact="true"
         :use-css-transforms="true"
         @movedEvent="movedEvent"
@@ -40,6 +44,7 @@
           drag-allow-from=".vue-draggable-handle"
           drag-ignore-from=".grid-menu"
           :class="{'grid-menu-setCot': isEdit}"
+          :style="cotStyle.style"
         >
           <div class="grid-menu" >
             <div  @click="edit(item)">编辑</div>
@@ -54,6 +59,7 @@
 
     <EcDragEditDrawer ref="editDrawer" />
     <EcDragAddDrawer ref="addDrawer"  />
+    <StyleEdit ref="styleEdit"></StyleEdit>
   </div>
 </template>
 
@@ -63,6 +69,7 @@
   import EcWipe from '../components/swipe'
   import EcDragEditDrawer from '../packages/edit'
   import EcDragAddDrawer from '../packages/add'
+  import StyleEdit from './styleEdit'
   export default {
     components: {
       GridLayout,
@@ -70,7 +77,8 @@
       EcAppCot,
       EcDragEditDrawer,
       EcDragAddDrawer,
-      EcWipe
+      EcWipe,
+      StyleEdit
     },
     data() {
       return {
@@ -81,7 +89,13 @@
         index: 0,
         layout: [],
         layoutCopy: [],
-        layoutEdit: []
+        layoutEdit: [],
+        cotStyle: {
+          autoSize: true,
+          margin: [10, 10],
+          style: {}
+        },
+        copyCotStyle: ''
       }
     },
     watch: {
@@ -94,6 +108,10 @@
       }
     },
     methods: {
+      styleEdit() {
+        this.copyCotStyle = JSON.parse(JSON.stringify(this.cotStyle))
+        this.$refs.styleEdit.init()
+      },
       findBack() {
         if (this.layoutCopy) {
           this.layout = JSON.parse(JSON.stringify(this.layoutCopy))
