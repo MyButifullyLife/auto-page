@@ -43,6 +43,9 @@
         </div>
 
       </section>
+      <footer class="footer-cot">
+           <el-button type="info" @click="reSet">恢复默认设置</el-button>
+      </footer>
     </el-drawer>
   </div>
 </template>
@@ -92,6 +95,9 @@ export default {
   mounted() {
   },
   methods: {
+    reSet() {
+      this.$emit('reSetConfig')
+    },
     updateValue(val) {
       this.cotStyle.style.backgroundColor = val.hex
     },
@@ -124,6 +130,8 @@ export default {
     .section-cot{
       padding: 0 12px;
       font-size: 12px;
+      height: calc(100% - 60px);
+      overflow-y: scroll;
       .title{
         margin:24px 0 12px 0;
         color: #000;

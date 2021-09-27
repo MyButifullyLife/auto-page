@@ -58,7 +58,7 @@
 
     <EcDragEditDrawer ref="editDrawer" :is-admin="isAdmin"/>
     <EcDragAddDrawer ref="addDrawer" :is-admin="isAdmin"/>
-    <StyleEdit ref="styleEdit" :is-admin="isAdmin"/>
+    <StyleEdit ref="styleEdit" :is-admin="isAdmin" @reSetConfig="reSetConfig"/>
   </div>
 </template>
 
@@ -160,6 +160,9 @@ export default {
     styleEdit() {
       this.copyCotStyle = JSON.parse(JSON.stringify(this.cotStyle))
       this.$refs.styleEdit.init()
+    },
+    reSetConfig() {
+      this.cotStyle = JSON.parse(JSON.stringify(this.copyCotStyle))
     },
     findBack() {
       if (this.layoutCopy) {
