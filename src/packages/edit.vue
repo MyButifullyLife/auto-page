@@ -5,40 +5,49 @@
       :visible.sync="drawerShow"
       :direction="'rtl'"
       size="400px"
-      @close="close"
       :modal="false"
+      @close="close"
     >
-      <component :is="comData[ detailItem.editFile ]" v-bind="detailItem.props" @close="childClose" />
+      <component :is="comData[ detailItem.editFile ]" v-bind="detailItem.props"  :is-admin="isAdmin" @close="childClose" />
     </el-drawer>
   </div>
 </template>
 
 <script>
-  import Components from './config'
-  export default {
-    name: 'EcDragEditDrawer',
-    data() {
-      return {
-        comData: Components,
-        drawerShow: false,
-        detailItem: {}
-      }
+import Components from './config'
+export default {
+  name: 'EcDragEditDrawer',
+  props: {
+    /**
+     * 是否管理员
+     */
+    isAdmin: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      comData: Components,
+      drawerShow: false,
+      detailItem: {}
+    }
+  },
+  mounted() {
+  },
+  methods: {
+    init(item) {
+      this.drawerShow = true
+      this.detailItem = item.comField
     },
-    mounted() {
+    close() {
+      this.$parent.layout = JSON.parse(JSON.stringify(this.$parent.layoutEdit))
     },
-    methods: {
-      init(item) {
-        this.drawerShow = true
-        this.detailItem = item.comField
-      },
-      close() {
-        this.$parent.layout = JSON.parse(JSON.stringify(this.$parent.layoutEdit))
-      },
-      childClose() {
-        this.drawerShow = false
-      }
+    childClose() {
+      this.drawerShow = false
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

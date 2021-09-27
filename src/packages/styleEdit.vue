@@ -8,98 +8,108 @@
       :modal="false"
       @close="close"
     >
-     <section class="section-cot">
-       <p class="title" style="margin-top: 0;">
-         页面设置
-       </p>
-       <el-radio-group v-model="cotStyle.autoSize" @click="change"  size="mini" class="radio">
-         <el-radio :label="true" size="mini">自适应</el-radio>
-         <el-radio :label="false" size="mini">固定宽度</el-radio>
-       </el-radio-group>
-       <p class="title ">
-         页面边距
-       </p>
-       <div class="input-cot">
-         <span>左右</span><el-input-number v-model="cotStyle.marginTop"  :min="0"    size="mini"></el-input-number>
-       </div>
-       <div class="input-cot" style="margin-top: 12px;">
-         <span>上下</span><el-input-number v-model="cotStyle.marginRight"  :min="0"    size="mini"></el-input-number>
-       </div>
-       <p class="title ">
-         背景颜色
-       </p>
-       <div class="color-cot" @click="showColor">
-         <el-popover
-                 placement="top-start"
-                 trigger="click">
-           <div slot="reference" class="color-btn">
-             <el-button  :style="{'backgroundColor': cotStyle.style.backgroundColor}"  style="margin-right:15px;" > </el-button> <span>{{cotStyle.style.backgroundColor}}</span>
-           </div>
-           <div >
-             <sketch-picker  :value="cotStyle.style.backgroundColor" @input="updateValue"/>
-           </div>
-         </el-popover>
-       </div>
+      <section class="section-cot">
+        <p class="title" style="margin-top: 0;">
+          页面设置
+        </p>
+        <el-radio-group v-model="cotStyle.autoSize" size="mini" class="radio" @click="change">
+          <el-radio :label="true" size="mini">自适应</el-radio>
+          <el-radio :label="false" size="mini">固定宽度</el-radio>
+        </el-radio-group>
+        <p class="title ">
+          页面边距
+        </p>
+        <div class="input-cot">
+          <span>左右</span><el-input-number v-model="cotStyle.marginTop" :min="0" size="mini" />
+        </div>
+        <div class="input-cot" style="margin-top: 12px;">
+          <span>上下</span><el-input-number v-model="cotStyle.marginRight" :min="0" size="mini" />
+        </div>
+        <p class="title ">
+          背景颜色
+        </p>
+        <div class="color-cot" @click="showColor">
+          <el-popover
+            placement="top-start"
+            trigger="click"
+          >
+            <div slot="reference" class="color-btn">
+              <el-button :style="{'backgroundColor': cotStyle.style.backgroundColor}" style="margin-right:15px;" /> <span>{{ cotStyle.style.backgroundColor }}</span>
+            </div>
+            <div>
+              <sketch-picker :value="cotStyle.style.backgroundColor" @input="updateValue" />
+            </div>
+          </el-popover>
+        </div>
 
-     </section>
+      </section>
     </el-drawer>
   </div>
 </template>
 
 <script>
-  import { Sketch } from 'vue-color'
-  export default {
-    name: 'StyleEdit',
-    components: {
-      'sketch-picker': Sketch
-    },
-    data() {
-      return {
-        drawerShow: false,
-        cotStyle: {
-          marginTop: 10,
-          marginRight: 10,
-          margin: [],
-          autoSize: true,
-          style: {
-            backgroundColor: '#DBD8D8'
-          }
+import { Sketch } from 'vue-color'
+export default {
+  name: 'StyleEdit',
+  components: {
+    'sketch-picker': Sketch
+  },
+  props: {
+    /**
+     * 是否管理员
+     */
+    isAdmin: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      drawerShow: false,
+      cotStyle: {
+        marginTop: 10,
+        marginRight: 10,
+        margin: [],
+        autoSize: true,
+        style: {
+          backgroundColor: '#DBD8D8'
         }
       }
-    },
-    watch: {
-      cotStyle: {
-        handler(val) {
-          const d = JSON.parse(JSON.stringify(val))
-          d.margin = []
-          d.margin.push(d.marginTop)
-          d.margin.push(d.marginRight)
-          this.$parent.cotStyle = d
-        },
-        deep: true
-      }
-    },
-    mounted() {
-    },
-    methods: {
-      updateValue(val) {
-        this.cotStyle.style.backgroundColor = val.hex
+    }
+  },
+  watch: {
+    cotStyle: {
+      handler(val) {
+        const d = JSON.parse(JSON.stringify(val))
+        d.margin = []
+        d.margin.push(d.marginTop)
+        d.margin.push(d.marginRight)
+        this.$parent.cotStyle = d
       },
-      showColor() {
+      deep: true
+    }
+  },
+  mounted() {
+  },
+  methods: {
+    updateValue(val) {
+      this.cotStyle.style.backgroundColor = val.hex
+    },
+    showColor() {
 
-      },
-      change(e) {
-        console.log(e)
-      },
-      init() {
-        this.drawerShow = true
-      },
-      close() {
-      },
-      childClose() {
-      }
+    },
+    change(e) {
+      console.log(e)
+    },
+    init(item) {
+      this.drawerShow = true
+    },
+    close() {
+    },
+    childClose() {
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -5,15 +5,24 @@
 </template>
 
 <script>
-  export default {
-    name: 'EcAppEdit',
-    data() {
-      return {
-      }
-    },
-    mounted() {
-    },
-    methods: {
+export default {
+  name: 'EcAppEdit',
+  props: {
+    /**
+     * 是否管理员
+     */
+    isAdmin: {
+      type: Boolean,
+      default: false
     }
+  },
+  data() {
+    return {
+    }
+  },
+  mounted() {
+  },
+  methods: {
   }
+}
 </script>

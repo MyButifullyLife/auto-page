@@ -10,10 +10,10 @@
 export default {
   name: 'EcSwipe',
   props: {
-     list: {
-       type: Array,
-       default: () => []
-     }
+    list: {
+      type: Array,
+      default: () => []
+    }
   },
   data() {
     return {

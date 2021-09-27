@@ -1,12 +1,12 @@
 <template>
   <div class="EcApp-cot">
     <h1 class="EcApp-cot-title">
-      快捷应用 <span class="img-cot"> <img src="./img/add.svg" alt=""> </span>
+      {{ title }} <span class="img-cot"> <img src="./img/add.svg" alt=""> </span>
     </h1>
     <div class="EcApp-cot-list">
       <div v-for="(item,key) in list" :key="key" class="EcApp-cot-list-card">
         <img :src="item.img" alt="">
-        <p>{{item.name}}</p>
+        <p>{{ item.name }}</p>
       </div>
     </div>
   </div>
@@ -17,10 +17,10 @@
 export default {
   name: 'EcAppCot',
   props: {
-      title: {
-        type: String,
-        defaults: '快捷应用'
-      }
+    title: {
+      type: String,
+      defaults: '快捷应用'
+    }
   },
   data() {
     return {
